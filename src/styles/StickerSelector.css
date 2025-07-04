@@ -1,0 +1,28 @@
+.sticker-selector {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.sticker-item {
+  width: 60px;
+  height: 60px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  padding: 0.25rem;
+  cursor: pointer;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border 0.2s ease;
+}
+
+.sticker-item img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.sticker-item.selected {
+  border-color: #ff9900;
+}

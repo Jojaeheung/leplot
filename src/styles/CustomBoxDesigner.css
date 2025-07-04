@@ -39,3 +39,47 @@
   margin-top: 1.5rem;
   text-align: center;
 }
+
+.next-btn,
+.prev-btn,
+.confirm-btn {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  background: #ff9900;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.next-btn:disabled,
+.confirm-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.next-btn:hover:not(:disabled),
+.prev-btn:hover,
+.confirm-btn:hover:not(:disabled) {
+  background: #ff7a00;
+}
+
+.decorate-layout {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.decorate-controls {
+  max-width: 300px;
+}
+
+.decorate-controls input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}

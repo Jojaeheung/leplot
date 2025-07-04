@@ -7,6 +7,7 @@ import '../styles/CustomBoxDesigner.css';
 import CupcakeModel from './models/CupcakeModel';
 import DonutModel from './models/DonutModel';
 import MacaronModel from './models/MacaronModel';
+import StickerSelector, { stickers as STICKER_OPTIONS } from './StickerSelector';
 
 // Temporary placeholder mesh for the dessert box.
 const RotatingBox = () => {
@@ -64,9 +65,31 @@ const PreviewCapturer = ({ trigger, onCapture }) => {
   return null;
 };
 
+const DESSERT_PRICES = {
+  cupcake: 3000,
+  donut: 2500,
+  macaron: 2000,
+};
+
+const CHAR_PRICE = 100;
+
 const CustomBoxDesigner = () => {
   const [placedDesserts, setPlacedDesserts] = useState([]);
   const [previewUrl, setPreviewUrl] = useState(null);
+
+  // workflow step: 1 arrange, 2 decorate
+  const [step, setStep] = useState(1);
+
+  // Decoration selections
+  const [selectedSticker, setSelectedSticker] = useState(null);
+  const [customText, setCustomText] = useState('');
+
+  const calcPrice = useCallback(() => {
+    const dessertTotal = placedDesserts.reduce((sum, d) => sum + (DESSERT_PRICES[d.id] || 0), 0);
+    const stickerCost = selectedSticker ? selectedSticker.price : 0;
+    const textCost = customText.length * CHAR_PRICE;
+    return dessertTotal + stickerCost + textCost;
+  }, [placedDesserts, selectedSticker, customText]);
 
   const handleDragEnd = useCallback((event) => {
     const { over, active } = event;
@@ -79,47 +102,102 @@ const CustomBoxDesigner = () => {
     }
   }, []);
 
+  const totalPrice = calcPrice();
+
   return (
     <section className="designer-wrapper">
       <h2 className="designer-title">나만의 디저트 박스 만들기</h2>
-      <div className="designer-layout">
-        <DessertList />
 
-        <DndContext onDragEnd={handleDragEnd}>
-          <div className="designer-canvas-container">
-            {/* Droppable overlay wraps the Canvas */}
-            <BoxDropZone>
-              <Canvas camera={{ position: [5, 5, 5], fov: 50 }} shadows preserveDrawingBuffer>
-                {/* Lighting */}
-                <ambientLight intensity={0.6} />
-                <directionalLight position={[5, 10, 5]} intensity={0.8} castShadow />
+      {step === 1 && (
+        <div className="designer-layout">
+          <DessertList />
 
-                {/* Base rotating box to represent container */}
-                <RotatingBox />
+          <DndContext onDragEnd={handleDragEnd}>
+            <div className="designer-canvas-container">
+              {/* Droppable overlay wraps the Canvas */}
+              <BoxDropZone>
+                <Canvas camera={{ position: [5, 5, 5], fov: 50 }} shadows preserveDrawingBuffer>
+                  {/* Lighting */}
+                  <ambientLight intensity={0.6} />
+                  <directionalLight position={[5, 10, 5]} intensity={0.8} castShadow />
 
-                {/* Render placed desserts */}
-                {placedDesserts.map((dessert) => {
-                  const MeshComponent = dessertMeshFactory[dessert.id];
-                  if (!MeshComponent) return null;
-                  return <MeshComponent key={dessert.key} position={dessert.position} />;
-                })}
+                  {/* Base rotating box to represent container */}
+                  <RotatingBox />
 
-                <OrbitControls enablePan enableZoom />
+                  {/* Render placed desserts */}
+                  {placedDesserts.map((dessert) => {
+                    const MeshComponent = dessertMeshFactory[dessert.id];
+                    if (!MeshComponent) return null;
+                    return <MeshComponent key={dessert.key} position={dessert.position} />;
+                  })}
 
-                {/* Capture preview when desserts update */}
-                <PreviewCapturer trigger={placedDesserts} onCapture={setPreviewUrl} />
-              </Canvas>
-            </BoxDropZone>
+                  <OrbitControls enablePan enableZoom />
+
+                  {/* Capture preview when desserts update */}
+                  <PreviewCapturer trigger={placedDesserts} onCapture={setPreviewUrl} />
+                </Canvas>
+              </BoxDropZone>
+            </div>
+          </DndContext>
+
+          {previewUrl && (
+            <div className="designer-preview">
+              <h3>샘플 미리보기</h3>
+              <img src={previewUrl} alt="sample preview" style={{ maxWidth: '300px', border: '1px solid #ccc' }} />
+            </div>
+          )}
+
+          {/* Next button */}
+          <button
+            className="next-btn"
+            disabled={placedDesserts.length === 0}
+            onClick={() => setStep(2)}
+          >
+            다음 단계 (스티커 & 문구)
+          </button>
+        </div>
+      )}
+
+      {step === 2 && (
+        <div className="decorate-layout">
+          <div className="decorate-controls">
+            <h3>스티커 선택</h3>
+            <StickerSelector
+              selectedId={selectedSticker?.id}
+              onSelect={(s) => setSelectedSticker(s)}
+            />
+
+            <h3>문구 입력</h3>
+            <input
+              type="text"
+              maxLength={30}
+              placeholder="최대 30자"
+              value={customText}
+              onChange={(e) => setCustomText(e.target.value)}
+            />
+
+            <h3>가격</h3>
+            <p>{totalPrice.toLocaleString()} 원</p>
+
+            <button className="prev-btn" onClick={() => setStep(1)}>이전</button>
+            <button className="confirm-btn" disabled={placedDesserts.length === 0}>주문 확정</button>
           </div>
-        </DndContext>
 
-        {previewUrl && (
-          <div className="designer-preview">
-            <h3>샘플 미리보기</h3>
-            <img src={previewUrl} alt="sample preview" style={{ maxWidth: '300px', border: '1px solid #ccc' }} />
-          </div>
-        )}
-      </div>
+          {/* Reuse preview */}
+          {previewUrl && (
+            <div className="designer-preview">
+              <h3>샘플(배치)</h3>
+              <img src={previewUrl} alt="sample preview" style={{ maxWidth: '300px', border: '1px solid #ccc' }} />
+              {selectedSticker && (
+                <p>스티커: {selectedSticker.label}</p>
+              )}
+              {customText && (
+                <p>문구: {customText}</p>
+              )}
+            </div>
+          )}
+        </div>
+      )}
     </section>
   );
 };
