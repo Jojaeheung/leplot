@@ -1,9 +1,12 @@
-import React, { useRef, useState, useCallback } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import React, { useRef, useState, useCallback, useEffect } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { DndContext, useDroppable } from '@dnd-kit/core';
 import DessertList from './DessertList';
 import '../styles/CustomBoxDesigner.css';
+import CupcakeModel from './models/CupcakeModel';
+import DonutModel from './models/DonutModel';
+import MacaronModel from './models/MacaronModel';
 
 // Temporary placeholder mesh for the dessert box.
 const RotatingBox = () => {
@@ -25,41 +28,6 @@ const RotatingBox = () => {
   );
 };
 
-// Simple 3D dessert placeholder meshes
-const CupcakeMesh = ({ position }) => (
-  <mesh position={position} castShadow>
-    <cylinderGeometry args={[0.6, 0.8, 1.2, 32]} />
-    <meshStandardMaterial color="#ffb6c1" />
-  </mesh>
-);
-
-const DonutMesh = ({ position }) => (
-  <mesh position={position} castShadow>
-    <torusGeometry args={[0.7, 0.25, 16, 100]} />
-    <meshStandardMaterial color="#ffefd5" />
-  </mesh>
-);
-
-const MacaronMesh = ({ position }) => (
-  <group position={position} castShadow>
-    <mesh>
-      <cylinderGeometry args={[0.8, 0.8, 0.4, 32]} />
-      <meshStandardMaterial color="#d8bfd8" />
-    </mesh>
-    <mesh position={[0, 0.3, 0]}>
-      <cylinderGeometry args={[0.8, 0.8, 0.4, 32]} />
-      <meshStandardMaterial color="#dcd0ff" />
-    </mesh>
-  </group>
-);
-
-// Mapping id -> component renderer
-const dessertMeshFactory = {
-  cupcake: CupcakeMesh,
-  donut: DonutMesh,
-  macaron: MacaronMesh,
-};
-
 // Droppable overlay component to register drop target
 const BoxDropZone = ({ children }) => {
   const { setNodeRef } = useDroppable({ id: 'box-dropzone' });
@@ -79,8 +47,26 @@ const randomPosition = () => {
   return [x, y, z];
 };
 
+// Capture canvas to dataURL anytime desserts change
+const PreviewCapturer = ({ trigger, onCapture }) => {
+  const { gl, scene, camera } = useThree();
+
+  useEffect(() => {
+    // Wait for next render frame
+    const handle = requestAnimationFrame(() => {
+      gl.render(scene, camera);
+      const dataUrl = gl.domElement.toDataURL('image/png');
+      onCapture(dataUrl);
+    });
+    return () => cancelAnimationFrame(handle);
+  }, [trigger]);
+
+  return null;
+};
+
 const CustomBoxDesigner = () => {
   const [placedDesserts, setPlacedDesserts] = useState([]);
+  const [previewUrl, setPreviewUrl] = useState(null);
 
   const handleDragEnd = useCallback((event) => {
     const { over, active } = event;
@@ -103,7 +89,7 @@ const CustomBoxDesigner = () => {
           <div className="designer-canvas-container">
             {/* Droppable overlay wraps the Canvas */}
             <BoxDropZone>
-              <Canvas camera={{ position: [5, 5, 5], fov: 50 }} shadows>
+              <Canvas camera={{ position: [5, 5, 5], fov: 50 }} shadows preserveDrawingBuffer>
                 {/* Lighting */}
                 <ambientLight intensity={0.6} />
                 <directionalLight position={[5, 10, 5]} intensity={0.8} castShadow />
@@ -119,13 +105,30 @@ const CustomBoxDesigner = () => {
                 })}
 
                 <OrbitControls enablePan enableZoom />
+
+                {/* Capture preview when desserts update */}
+                <PreviewCapturer trigger={placedDesserts} onCapture={setPreviewUrl} />
               </Canvas>
             </BoxDropZone>
           </div>
         </DndContext>
+
+        {previewUrl && (
+          <div className="designer-preview">
+            <h3>샘플 미리보기</h3>
+            <img src={previewUrl} alt="sample preview" style={{ maxWidth: '300px', border: '1px solid #ccc' }} />
+          </div>
+        )}
       </div>
     </section>
   );
+};
+
+// Mapping id -> component renderer
+const dessertMeshFactory = {
+  cupcake: CupcakeModel,
+  donut: DonutModel,
+  macaron: MacaronModel,
 };
 
 export default CustomBoxDesigner;
