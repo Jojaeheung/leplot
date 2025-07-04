@@ -5,6 +5,7 @@ import Navigation from './components/Navigation';
 import GroupOrderMenu from './components/GroupOrderMenu';
 import OrderHistory from './components/OrderHistory';
 import Footer from './components/Footer';
+import CustomBoxDesigner from './components/CustomBoxDesigner';
 import './styles/App.css';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       <main className="main-content">
         {currentView === 'menu' && <GroupOrderMenu />}
         {currentView === 'history' && <OrderHistory />}
+        {currentView === 'designer' && <CustomBoxDesigner />}
       </main>
       
       <Footer />

@@ -20,6 +20,13 @@ const Navigation = ({ currentView, setCurrentView }) => {
             <i className="fas fa-history"></i>
             주문 내역
           </button>
+          <button 
+            className={`nav-btn ${currentView === 'designer' ? 'active' : ''}`}
+            onClick={() => setCurrentView('designer')}
+          >
+            <i className="fas fa-cube"></i>
+            커스텀 박스
+          </button>
         </div>
       </div>
     </nav>

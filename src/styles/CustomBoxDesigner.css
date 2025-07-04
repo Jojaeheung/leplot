@@ -1,0 +1,24 @@
+.designer-wrapper {
+  padding: 2rem 0;
+  text-align: center;
+}
+
+.designer-title {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.designer-canvas-container {
+  width: 100%;
+  max-width: 800px;
+  height: 500px;
+  margin: 0 auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.designer-hint {
+  margin-top: 1rem;
+  color: #888;
+}
