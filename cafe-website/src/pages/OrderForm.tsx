@@ -80,29 +80,29 @@ export function OrderForm() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-orange-50 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-orange-50 py-4 sm:py-8">
       <div className="max-w-2xl mx-auto px-4">
         {/* 헤더 */}
-        <div className="bg-white rounded-3xl shadow-xl p-8 mb-8">
-          <div className="flex items-center space-x-4 mb-6">
-            <ShoppingCart className="h-8 w-8 text-pink-500" />
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-pink-600 to-orange-600 bg-clip-text text-transparent">
+        <div className="bg-white rounded-3xl shadow-xl p-4 sm:p-6 lg:p-8 mb-4 sm:mb-8">
+          <div className="flex items-center space-x-3 sm:space-x-4 mb-4 sm:mb-6">
+            <ShoppingCart className="h-6 w-6 sm:h-8 sm:w-8 text-pink-500" />
+            <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-pink-600 to-orange-600 bg-clip-text text-transparent">
               주문 정보 입력
             </h1>
           </div>
           
           {/* 주문 요약 */}
-          <div className="bg-gradient-to-r from-pink-100 to-orange-100 rounded-2xl p-6">
-            <div className="flex items-center space-x-4">
+          <div className="bg-gradient-to-r from-pink-100 to-orange-100 rounded-2xl p-4 sm:p-6">
+            <div className="flex items-center space-x-3 sm:space-x-4">
               <img 
                 src={item.image} 
                 alt={item.name}
-                className="w-16 h-16 rounded-xl object-cover"
+                className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl object-cover"
               />
               <div>
-                <h3 className="text-xl font-bold text-gray-800">{item.name}</h3>
-                <p className="text-gray-600">수량: {quantity}개</p>
-                <p className="text-lg font-bold text-pink-600">
+                <h3 className="text-lg sm:text-xl font-bold text-gray-800">{item.name}</h3>
+                <p className="text-sm sm:text-base text-gray-600">수량: {quantity}개</p>
+                <p className="text-base sm:text-lg font-bold text-pink-600">
                   총 금액: ₩{(item.price * quantity).toLocaleString()}
                 </p>
               </div>
@@ -111,10 +111,10 @@ export function OrderForm() {
         </div>
 
         {/* 주문 정보 입력 폼 */}
-        <form onSubmit={handleSubmit} className="bg-white rounded-3xl shadow-xl p-8">
-          <div className="space-y-8">
+        <form onSubmit={handleSubmit} className="bg-white rounded-3xl shadow-xl p-4 sm:p-6 lg:p-8">
+          <div className="space-y-6 sm:space-y-8">
             {/* 날짜와 시간 */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               <div>
                 <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
                   <Calendar className="h-4 w-4 text-pink-500" />
@@ -125,7 +125,7 @@ export function OrderForm() {
                   name="date"
                   value={formData.date}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  className="w-full px-3 sm:px-4 py-3 sm:py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent text-base touch-manipulation"
                   required
                 />
               </div>
@@ -139,7 +139,7 @@ export function OrderForm() {
                   name="time"
                   value={formData.time}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  className="w-full px-3 sm:px-4 py-3 sm:py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent text-base touch-manipulation"
                   required
                 />
               </div>
@@ -147,11 +147,11 @@ export function OrderForm() {
 
             {/* 주문인 정보 */}
             <div>
-              <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center space-x-2">
-                <User className="h-5 w-5 text-pink-500" />
+              <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-3 sm:mb-4 flex items-center space-x-2">
+                <User className="h-4 w-4 sm:h-5 sm:w-5 text-pink-500" />
                 <span>주문인 정보</span>
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <label className="text-sm font-medium text-gray-700 mb-2 block">성함 *</label>
                   <input
@@ -159,7 +159,7 @@ export function OrderForm() {
                     name="ordererName"
                     value={formData.ordererName}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-3 sm:py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent text-base touch-manipulation"
                     placeholder="주문인 성함을 입력하세요"
                     required
                   />
@@ -171,7 +171,7 @@ export function OrderForm() {
                     name="ordererPhone"
                     value={formData.ordererPhone}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-3 sm:py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent text-base touch-manipulation"
                     placeholder="010-0000-0000"
                     required
                   />
@@ -181,11 +181,11 @@ export function OrderForm() {
 
             {/* 수령인 정보 */}
             <div>
-              <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center space-x-2">
-                <Phone className="h-5 w-5 text-pink-500" />
+              <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-3 sm:mb-4 flex items-center space-x-2">
+                <Phone className="h-4 w-4 sm:h-5 sm:w-5 text-pink-500" />
                 <span>수령인 정보</span>
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <label className="text-sm font-medium text-gray-700 mb-2 block">성함 *</label>
                   <input
@@ -193,7 +193,7 @@ export function OrderForm() {
                     name="recipientName"
                     value={formData.recipientName}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-3 sm:py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent text-base touch-manipulation"
                     placeholder="수령인 성함을 입력하세요"
                     required
                   />
@@ -205,7 +205,7 @@ export function OrderForm() {
                     name="recipientPhone"
                     value={formData.recipientPhone}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                    className="w-full px-3 sm:px-4 py-3 sm:py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent text-base touch-manipulation"
                     placeholder="010-0000-0000"
                     required
                   />
@@ -224,7 +224,7 @@ export function OrderForm() {
                 value={formData.address}
                 onChange={handleInputChange}
                 rows={3}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                className="w-full px-3 sm:px-4 py-3 sm:py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent text-base touch-manipulation resize-none"
                 placeholder="상세 주소를 입력하세요 (예: 전북 전주시 완산구 효자동 123-45 아파트 101동 1001호)"
                 required
               />
@@ -232,12 +232,12 @@ export function OrderForm() {
 
             {/* 문구스티커 */}
             <div>
-              <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-4">
+              <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-3 sm:mb-4">
                 <Gift className="h-4 w-4 text-pink-500" />
                 <span>문구스티커</span>
               </label>
-              <div className="flex items-center space-x-4 mb-4">
-                <label className="flex items-center space-x-2">
+              <div className="flex items-center space-x-4 mb-3 sm:mb-4">
+                <label className="flex items-center space-x-2 touch-manipulation">
                   <input
                     type="checkbox"
                     name="stickerRequired"
@@ -254,7 +254,7 @@ export function OrderForm() {
                   value={formData.stickerContent}
                   onChange={handleInputChange}
                   rows={2}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  className="w-full px-3 sm:px-4 py-3 sm:py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent text-base touch-manipulation resize-none"
                   placeholder="스티커에 들어갈 문구를 입력하세요"
                 />
               )}
@@ -271,17 +271,17 @@ export function OrderForm() {
                 value={formData.requests}
                 onChange={handleInputChange}
                 rows={4}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                className="w-full px-3 sm:px-4 py-3 sm:py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent text-base touch-manipulation resize-none"
                 placeholder="추가 요청사항이나 전달하고 싶은 내용을 입력하세요"
               />
             </div>
           </div>
 
           {/* 주문 완료 버튼 */}
-          <div className="mt-8 pt-6 border-t border-gray-200">
+          <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-200">
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-pink-500 to-orange-500 text-white font-bold py-4 px-8 rounded-xl hover:from-pink-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+              className="w-full bg-gradient-to-r from-pink-500 to-orange-500 text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-xl hover:from-pink-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 shadow-lg text-base sm:text-lg touch-manipulation"
             >
               주문 완료
             </button>

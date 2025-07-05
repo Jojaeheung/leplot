@@ -10,6 +10,20 @@
     font-family: 'Nunito', sans-serif;
     background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 50%, #fce7f3 100%);
     min-height: 100vh;
+    /* 모바일 터치 최적화 */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  /* 터치 친화적인 요소들 */
+  button, a, input, textarea, select {
+    -webkit-tap-highlight-color: rgba(236, 72, 153, 0.3);
+    touch-action: manipulation;
   }
 }
 
@@ -22,6 +36,10 @@
   
   .dessert-button {
     @apply bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 text-white font-bold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl;
+    /* 터치 최적화 */
+    min-height: 44px;
+    min-width: 44px;
+    touch-action: manipulation;
   }
   
   .dessert-card {
@@ -30,6 +48,39 @@
   
   .dessert-input {
     @apply w-full px-4 py-3 border-2 border-pink-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-300;
+    /* 모바일 입력 최적화 */
+    font-size: 16px; /* iOS에서 줌 방지 */
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  /* 터치 친화적인 버튼 스타일 */
+  .touch-button {
+    min-height: 44px;
+    min-width: 44px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(236, 72, 153, 0.3);
+  }
+
+  /* 터치 친화적인 링크 스타일 */
+  .touch-link {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(236, 72, 153, 0.3);
+  }
+
+  /* 슬라이더 터치 최적화 */
+  .touch-slider {
+    touch-action: pan-x;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* 스크롤 영역 터치 최적화 */
+  .touch-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
   }
 }
 
@@ -44,12 +95,51 @@
   50% { opacity: 1; transform: scale(1.2); }
 }
 
+@keyframes pulse-pink {
+  0%, 100% { 
+    box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(236, 72, 153, 0);
+  }
+}
+
 .float-animation {
   animation: float 3s ease-in-out infinite;
 }
 
 .sparkle-animation {
   animation: sparkle 2s ease-in-out infinite;
+}
+
+.pulse-pink-animation {
+  animation: pulse-pink 2s infinite;
+}
+
+/* 모바일 최적화 */
+@media (max-width: 768px) {
+  /* 작은 화면에서 텍스트 선택 허용 (콘텐츠 영역) */
+  .selectable-text {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
+
+  /* 모바일에서 호버 효과 비활성화 */
+  .hover-desktop:hover {
+    transform: none;
+  }
+}
+
+/* 포커스 스타일 개선 */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #ec4899;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(236, 72, 153, 0.1);
 }
 
 /* 스크롤바 스타일링 */
@@ -69,4 +159,20 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(135deg, #db2777, #ea580c);
+}
+
+/* 모바일에서 스크롤바 숨김 */
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
+}
+
+/* 터치 디바이스에서 활성 상태 스타일 */
+@media (pointer: coarse) {
+  .touch-active:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+  }
 }
