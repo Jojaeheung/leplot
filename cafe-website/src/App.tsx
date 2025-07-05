@@ -1,8 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { Menu } from './pages/Menu';
-import { GroupOrder } from './pages/GroupOrder';
-import { OrderHistory } from './pages/OrderHistory';
+import { Dessert } from './pages/Dessert';
+import { Sandwich } from './pages/Sandwich';
+import { MenuDetail } from './pages/MenuDetail';
+import { OrderForm } from './pages/OrderForm';
+import { OrderConfirmation } from './pages/OrderConfirmation';
 import './App.css'
 
 function App() {
@@ -10,9 +13,12 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Menu />} />
-          <Route path="group-order" element={<GroupOrder />} />
-          <Route path="order-history" element={<OrderHistory />} />
+          <Route index element={<Dessert />} />
+          <Route path="/dessert" element={<Dessert />} />
+          <Route path="/sandwich" element={<Sandwich />} />
+          <Route path="/menu/:id" element={<MenuDetail />} />
+          <Route path="/order-form" element={<OrderForm />} />
+          <Route path="/order-confirmation" element={<OrderConfirmation />} />
         </Route>
       </Routes>
     </Router>

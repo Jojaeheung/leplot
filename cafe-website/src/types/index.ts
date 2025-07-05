@@ -3,8 +3,13 @@ export interface MenuItem {
   name: string;
   price: number;
   image: string;
+  images?: string[];
   description: string;
   category: 'coffee' | 'dessert' | 'sandwich' | 'beverage';
+  cafeInfo?: {
+    text: string;
+    images?: string[];
+  };
 }
 
 export interface OrderItem extends MenuItem {
