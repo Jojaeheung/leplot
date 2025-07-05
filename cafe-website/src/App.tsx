@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
-import { Menu } from './pages/Menu';
 import { Dessert } from './pages/Dessert';
 import { Sandwich } from './pages/Sandwich';
 import { MenuDetail } from './pages/MenuDetail';

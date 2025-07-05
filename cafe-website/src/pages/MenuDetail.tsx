@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Star, Heart, ArrowLeft, Plus, Minus, ShoppingCart, ChevronLeft, ChevronRight, Check, Coffee, Clock, CreditCard, Phone, Gift, Calendar, MapPin } from 'lucide-react';
+import { Star, Heart, ArrowLeft, Plus, Minus, ShoppingCart, ChevronLeft, ChevronRight } from 'lucide-react';
 import type { MenuItem } from '../types';
 import { getMenuItems } from '../utils/storage';
 

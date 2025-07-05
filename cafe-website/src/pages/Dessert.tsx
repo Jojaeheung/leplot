@@ -53,7 +53,7 @@ export function Dessert() {
   
   useEffect(() => {
     // 개발 중에만 메뉴를 초기화 (실제 배포시에는 제거)
-    if (process.env.NODE_ENV === 'development') {
+    if (import.meta.env.DEV) {
       resetMenuToDefault();
       // 개발자 콘솔에서 메뉴를 초기화할 수 있는 전역 함수 추가
       (window as any).resetMenu = () => {
@@ -123,7 +123,7 @@ export function Dessert() {
           className="flex transition-transform duration-500 ease-in-out h-full"
           style={{ transform: `translateX(-${currentPosterIndex * 100}%)`}}
         >
-          {posterImages.map((poster, index) => (
+          {posterImages.map((poster) => (
             <div key={poster.id} className="min-w-full h-full relative">
               <img 
                 src={poster.image} 

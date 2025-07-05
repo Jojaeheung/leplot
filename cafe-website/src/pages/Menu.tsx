@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Star, Heart, DollarSign, ShoppingCart, ChevronLeft, ChevronRight } from 'lucide-react';
 import type { MenuItem } from '../types';
-import { getMenuItems, resetMenuToDefault } from '../utils/storage';
+import { getMenuItems } from '../utils/storage';
 
 const priceRanges = {
   under5000: '~5,000원',
@@ -132,7 +132,7 @@ export function Menu() {
           className="flex transition-transform duration-500 ease-in-out h-full"
           style={{ transform: `translateX(-${currentPosterIndex * 100}%)` }}
         >
-          {posterImages.map((poster, index) => (
+          {posterImages.map((poster) => (
             <div key={poster.id} className="min-w-full h-full relative">
               <img 
                 src={poster.image} 

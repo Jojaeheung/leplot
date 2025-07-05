@@ -1,5 +1,5 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Coffee, Sandwich as SandwichIcon, Heart, Cookie } from 'lucide-react';
+import { Coffee, Sandwich as SandwichIcon } from 'lucide-react';
 
 export function Layout() {
   const location = useLocation();
